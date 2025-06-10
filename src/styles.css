@@ -1,0 +1,89 @@
+nav {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+nav a {
+  text-decoration: none;
+  color: #0077cc;
+  font-weight: bold;
+}
+
+nav a:hover {
+  color: #005fa3;
+}
+
+
+.tables-container {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.table-wrapper {
+  flex: 1 1 400px;
+  background: #f9f9f9;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 0 6px rgba(0,0,0,0.1);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table th,
+table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+table th {
+  background-color: #0077cc;
+  color: white;
+}
+
+.finalize-btn {
+  padding: 8px 16px;
+  background-color: #0077cc;
+  border: none;
+  color: white;
+  font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.finalize-btn:hover {
+  background-color: #005fa3;
+}
+
+
+
+.pagination-controls button {
+  padding: 8px 14px;
+  background-color: #0077cc;
+  border: none;
+  color: white;
+  font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 0 5px;
+  transition: background-color 0.3s ease;
+}
+
+.pagination-controls button:disabled {
+  background-color: #ccc;
+  cursor: default;
+}
+
+.pagination-controls span {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+
+
