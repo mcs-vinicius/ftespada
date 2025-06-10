@@ -1,10 +1,12 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, session
 from flask_mysqldb import MySQL
 from flask_cors import CORS
-
+from werkzeug.security import generate_password_hash, check_password_hash
+import os
 
 app = Flask(__name__)
 CORS(app)  # libera chamadas cross-origin para frontend
+app.secret_key = os.urandom(24) # Replace with a strong, random key in production
 
 # Configurações do banco MySQL
 app.config['MYSQL_HOST'] = 'localhost'
@@ -14,6 +16,61 @@ app.config['MYSQL_DB'] = 'ranking_system'
 
 mysql = MySQL(app)
 
+# --- User Management Endpoints ---
+
+@app.route('/register-user', methods=['POST'])
+def register_user():
+    data = request.json
+    username = data.get('username')
+    password = data.get('password')
+
+    if not username or not password:
+        return jsonify({'error': 'Nome de usuário e senha são obrigatórios'}), 400
+
+    hashed_password = generate_password_hash(password)
+
+    cur = mysql.connection.cursor()
+    try:
+        cur.execute("INSERT INTO users (username, password) VALUES (%s, %s)", (username, hashed_password))
+        mysql.connection.commit()
+        return jsonify({'message': 'Usuário cadastrado com sucesso!'}), 201
+    except Exception as e:
+        mysql.connection.rollback()
+        if "Duplicate entry" in str(e):
+            return jsonify({'error': 'Nome de usuário já existe.'}), 409
+        return jsonify({'error': 'Erro ao cadastrar usuário.'}), 500
+    finally:
+        cur.close()
+
+@app.route('/login', methods=['POST'])
+def login():
+    data = request.json
+    username = data.get('username')
+    password = data.get('password')
+
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT id, username, password FROM users WHERE username = %s", (username,))
+    user = cur.fetchone()
+    cur.close()
+
+    if user and check_password_hash(user[2], password):
+        # For simplicity, using a basic session. In production, consider JWTs.
+        session['logged_in'] = True
+        session['user_id'] = user[0]
+        session['username'] = user[1]
+        return jsonify({'message': 'Login bem-sucedido!', 'token': 'dummy-token'}), 200 # Dummy token for frontend
+    else:
+        return jsonify({'error': 'Credenciais inválidas'}), 401
+
+# --- Protected Route Decorator (Basic) ---
+def login_required(f):
+    from functools import wraps
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if not session.get('logged_in'):
+            return jsonify({'error': 'Não autorizado. Por favor, faça login.'}), 401
+        return f(*args, **kwargs)
+    return decorated_function
 
 @app.route('/seasons', methods=['GET'])
 def get_seasons():
