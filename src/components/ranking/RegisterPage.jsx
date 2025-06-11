@@ -202,77 +202,81 @@ const RegisterPage = ({ setSeasons }) => {
       </h1>
 
       <div style={formRow}>
-        <input
-          type="text"
-          placeholder="Nome"
-          style={inputStyle}
-          value={participant.name}
-          onChange={(e) =>
-            setParticipant({ ...participant, name: e.target.value })
-          }
-        />
+        <div className="divLb"> 
+          <span>Nome</span>
+          <input
+            type="text"
+            placeholder="Geriscleuso"
+            style={inputStyle}
+            value={participant.name}
+            onChange={(e) =>setParticipant({ ...participant, name: e.target.value })}/>
+        </div>
         
-        <input
-          type="number"
-          min="0"
-          placeholder="Fase de Acesso"
-          style={inputStyle}
-          value={participant.fase}
-          onChange={(e) =>
-            setParticipant({ ...participant, fase: e.target.value })
-          }
-        />
+        <div className="divLb">
+          <span>Fase de Acesso</span>
+          <input
+            type="number"
+            placeholder="Pontuação"
+            style={inputStyle}
+            value={participant.fase}
+            onChange={(e) =>setParticipant({ ...participant, fase: e.target.value })}/>
+        </div>
       </div>
 
       <div style={formRow}>
-        <input
-          type="number"
-          min="0"
-          placeholder="1ª Rodada"
-          style={inputStyle}
-          value={participant.r1}
-          onChange={(e) =>
-            setParticipant({ ...participant, r1: e.target.value })
-          }
-        />
-        <input
-          type="number"
-          min="0"
-          placeholder="2ª Rodada"
-          style={inputStyle}
-          value={participant.r2}
-          onChange={(e) =>
-            setParticipant({ ...participant, r2: e.target.value })
-          }
-        />
-        <input
-          type="number"
-          min="0"
-          placeholder="3ª Rodada"
-          style={inputStyle}
-          value={participant.r3}
-          onChange={(e) =>
-            setParticipant({ ...participant, r3: e.target.value })
-          }
-        />
+        
+        <div className="divLbb">
+            <span>1ª Rodada</span>
+            <input
+            type="number"
+            min="0"
+            placeholder="Pontuação"
+            style={inputStyle}
+            value={participant.r1}
+            onChange={(e) =>setParticipant({ ...participant, r1: e.target.value })}/>
+        </div>
+        
+        <div className="divLbb">
+          <span>2ª Rodada</span>
+            <input
+            type="number"
+            min="0"
+            placeholder="Pontuação"
+            style={inputStyle}
+            value={participant.r2}
+            onChange={(e) =>setParticipant({ ...participant, r2: e.target.value })}/>
+        </div>
+        
+        <div className="divLbb">
+          <span>3ª Rodada</span>
+            <input
+            type="number"
+            min="0"
+            placeholder="Pontuação"
+            style={inputStyle}
+            value={participant.r3}
+            onChange={(e) => setParticipant({ ...participant, r3: e.target.value })}/>
+        </div>
+        
       </div>
 
       {isEditing ? (
-        <button style={buttonStyle} onClick={saveEdit}>
+        <button className="btnCT" style={buttonStyle} onClick={saveEdit}>
           Salvar Edição
         </button>
       ) : (
-        <button style={buttonStyle} onClick={addParticipant}>
+        <button className="btnCT" style={buttonStyle} onClick={addParticipant}>
           Adicionar Participante
         </button>
       )}
+      <br />  <br /> <hr />
 
       <h2 style={{ marginTop: 32 }}>Participantes Atuais</h2>
-{currentParticipants.length === 0 && <p>Nenhum participante adicionado.</p>}
-<ul style={{ paddingLeft: 0, listStyle: "none" }}>
-  {[...currentParticipants]
-    .sort((a, b) => b.fase - a.fase)
-    .map((p, i) => (
+          {currentParticipants.length === 0 && <p>Nenhum participante adicionado.</p>}
+            <ul style={{ paddingLeft: 0, listStyle: "none" }}>
+              {[...currentParticipants]
+                .sort((a, b) => b.fase - a.fase)
+                .map((p, i) => (
       <li
         key={i}
         style={{
@@ -305,16 +309,16 @@ const RegisterPage = ({ setSeasons }) => {
           <b>Total:  {p.total}</b>
         </span>
         <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-  <button style={editBtnStyle} onClick={() => editParticipant(i)}>
-    Editar
-  </button>
-  <button style={deleteBtnStyle} onClick={() => deleteParticipant(i)}>
-    Excluir
-  </button>
-</div>
-      </li>
-    ))}
-</ul>
+          <button style={editBtnStyle} onClick={() => editParticipant(i)}>
+            Editar
+          </button>
+          <button style={deleteBtnStyle} onClick={() => deleteParticipant(i)}>
+            Excluir
+          </button>
+        </div>
+              </li>
+            ))}
+        </ul>
 
 
       <h2 style={{ marginTop: 32 }}>Datas da Temporada</h2>
@@ -339,7 +343,7 @@ const RegisterPage = ({ setSeasons }) => {
         </label>
       </div>
 
-      <button
+      <button className="btnCT"
         style={
           currentParticipants.length === 0 || !startDate || !endDate
             ? buttonDisabledStyle

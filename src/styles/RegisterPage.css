@@ -1,51 +1,18 @@
-/* styles/RegisterPage.css */
+.divLb{
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  text-align: center;
+}
 
-form input,
-input[type="text"],
-input[type="number"],
-input[type="date"] {
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 1rem;
+.divLbb{
+  display: flex;
+  flex-direction: column;
+  width: 32%;
+  text-align: center;
+}
+
+.btnCT{
   width: 100%;
-}
-
-button {
-  padding: 10px 20px;
-  background-color: #1976d2;
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-button:hover:not(:disabled) {
-  background-color: #115293;
-}
-
-button:disabled {
-  background-color: #aaa;
-  cursor: not-allowed;
-}
-
-ul {
-  margin-top: 10px;
-  padding-left: 20px;
-}
-
-li {
-  margin-bottom: 6px;
-}
-
-h1,
-h2 {
-  margin-bottom: 15px;
-}
-
-li input {
-  margin-right: 8px;
-  padding: 6px;
+  
 }
